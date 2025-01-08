@@ -1,48 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from '@/components/ui/alert-dialog';
 
 const LuckyPacketGame = () => {
   const [packets, setPackets] = useState([]);
+  const [openPacket, setOpenPacket] = useState(null);
   const [remainingPackets, setRemainingPackets] = useState(50);
+  const [showAlert, setShowAlert] = useState(false);
 
-  useEffect(() => {
-    // 初始化50个红包
-    const initialPackets = Array(50).fill(null).map((_, index) => ({
-      id: index,
-      opened: false
-    }));
-    setPackets(initialPackets);
-  }, []);
+  // 奖励配置
+  const rewards = [
+    { type: '好学币', amount: 5, probability: 0.3 },
+    { type: '好学币', amount: 10, probability: 0.3 },
+    { type: '好学币', amount: 20, probability: 0.1 },
+    { type: '零食小礼包', amount: null, probability: 0.1 },
+    { type: '精美文具', amount: null, probability: 0.1 },
+    { type: '神秘礼物', amount: null, probability: 0.1 },
+  ];
 
-  const handlePacketClick = (id) => {
-    setPackets(packets.map(packet => 
-      packet.id === id ? { ...packet, opened: true } : packet
-    ));
-    setRemainingPackets(prev => prev - 1);
-  };
+  // ... [这里是游戏的所有逻辑代码]
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-red-600 mb-4">新年抽红包</h1>
-        <p className="text-lg">还剩 {remainingPackets} 个红包未开启</p>
-      </div>
-
-      <div className="grid grid-cols-5 gap-6 p-4">
-        {packets.map((packet) => (
-          <button
-            key={packet.id}
-            onClick={() => handlePacketClick(packet.id)}
-            className={`h-20 flex items-center justify-center text-xl ${
-              packet.opened 
-                ? 'bg-gray-200' 
-                : 'bg-red-600 hover:bg-red-700'
-            }`}
-            disabled={packet.opened}
-          >
-            {packet.opened ? '开' : '学品'}
-          </button>
-        ))}
-      </div>
+      {/* 这里是游戏的UI部分 */}
     </div>
   );
 };
